@@ -1,5 +1,4 @@
 // go-callvis: a tool to help visualize the call graph of a Go program.
-//
 package main
 
 import (
@@ -36,6 +35,7 @@ var (
 	limitFlag     = flag.String("limit", "", "Limit package paths to given prefixes (separated by comma)")
 	ignoreFlag    = flag.String("ignore", "", "Ignore package paths containing given prefixes (separated by comma)")
 	includeFlag   = flag.String("include", "", "Include package paths with given prefixes (separated by comma)")
+	nofocus       = flag.Bool("nofocus", false, "No focus while parsing package paths.") // by Garfield
 	nostdFlag     = flag.Bool("nostd", false, "Omit calls to/from packages in standard library.")
 	nointerFlag   = flag.Bool("nointer", false, "Omit calls to unexported functions.")
 	testFlag      = flag.Bool("tests", false, "Include test code.")
@@ -118,7 +118,7 @@ func outputDot(fname string, outputFormat string) {
 	}
 }
 
-//noinspection GoUnhandledErrorResult
+// noinspection GoUnhandledErrorResult
 func main() {
 	flag.Parse()
 
@@ -160,6 +160,7 @@ func main() {
 			log.Fatal(err)
 		}
 	} else {
-		outputDot(*outputFile, *outputFormat)
+		//outputDot(*outputFile, *outputFormat)
+		outputJson(*outputFile, *outputFormat) // by Garfield
 	}
 }
