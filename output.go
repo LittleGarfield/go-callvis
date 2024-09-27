@@ -342,6 +342,7 @@ func printOutput(
 			} else {
 				nodes = append(nodes, n)
 			}
+			makeFuncDetailAndSave(node.Func, prog.Fset) // 收集所有函数节点
 
 			nodeMap[key] = n
 			return n
@@ -373,9 +374,9 @@ func printOutput(
 
 		// use position in file where callee is called as tooltip for the edge
 		fileEdge := fmt.Sprintf(
-			"at %s:%d: calling [%s]",
+			"at %s:%d:%d: calling [%s]",
 			filepath.Base(posEdge.Filename),
-			posEdge.Line,
+			posEdge.Line, posEdge.Column,
 			edge.Callee.Func.String(),
 		)
 
@@ -444,5 +445,6 @@ func printOutput(
 		return nil, err
 	}
 
+	makeFuncInfoAndSave(edges) // 生成FuncInfo
 	return buf.Bytes(), nil
 }
