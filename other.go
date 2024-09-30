@@ -57,7 +57,12 @@ func getFuncRange(fn *ssa.Function, fs *token.FileSet) []int {
 }
 func makeFuncDetailAndSave(fn *ssa.Function, fs *token.FileSet) {
 	// 文件
-	file := fs.Position(fn.Pos()).Filename // 绝对路径 TODO
+	pathPrefix := *projDir
+	if pathPrefix[len(pathPrefix)-1] != '/' { // 确保路径以 "/" 结尾
+		pathPrefix += "/"
+	}
+	prefixLen := len(pathPrefix)
+	file := fs.Position(fn.Pos()).Filename[prefixLen:] // 相对路径
 
 	// 参数列表
 	psStr := ""
