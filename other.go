@@ -174,5 +174,5 @@ func outputJson(fname string, outputFormat string) {
 	if err != nil {
 		log.Fatalf("%v\n", err)
 	}
-	log.Println("outputJson done.")
+	log.Println(fmt.Sprintf("write %s.json done.", fname))
 }
