@@ -13,6 +13,7 @@ import (
 
 type FuncDetail struct {
 	FileID        string         `json:"fileID"`
+	IsRecv        bool           `json:"isRecv"`
 	Range         []int          `json:"range"`
 	RtnType       string         `json:"rtnType"`
 	QualifiedName string         `json:"qualifiedName"`
@@ -95,6 +96,7 @@ func makeFuncDetailAndSave(fn *ssa.Function, fs *token.FileSet) {
 
 	funcDetailMap[fn.String()] = FuncDetail{
 		FileID:        file,
+		IsRecv:        fn.Signature.Recv() != nil,
 		Range:         getFuncRange(fn, fs),
 		RtnType:       retType[1 : len(retType)-1],
 		QualifiedName: fn.String(),
